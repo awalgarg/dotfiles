@@ -219,5 +219,5 @@ bar {
         position top
 }
 
-exec feh --bg-scale ~/.config/i3/wallpaper.png
+exec feh --bg-scale ~/.config/i3/wallpaper-1.png
 

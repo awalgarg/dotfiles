@@ -168,7 +168,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/wallpaper-1.png
+bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/wallpaper-2.png
 
 hide_edge_borders both
 focus_follows_mouse no
@@ -224,5 +224,5 @@ bar {
         position top
 }
 
-exec feh --bg-scale ~/.config/i3/wallpaper-1.png
+exec feh --bg-scale ~/.config/i3/wallpaper-2.png
 

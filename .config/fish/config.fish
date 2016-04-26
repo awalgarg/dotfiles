@@ -28,3 +28,4 @@ function fish_prompt
   set_color normal
 end
 
+set PATH $HOME/bin $PATH

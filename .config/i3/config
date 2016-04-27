@@ -226,5 +226,7 @@ bar {
         position top
 }
 
+new_window pixel 1
+
 exec feh --bg-scale ~/.config/i3/wallpaper-2.png
 

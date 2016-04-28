@@ -1,5 +1,5 @@
 syntax enable
-colorscheme monokai
+colorscheme seoul256
 set cursorline
 
 execute pathogen#infect()

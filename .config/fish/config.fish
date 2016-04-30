@@ -29,3 +29,12 @@ function fish_prompt
 end
 
 set PATH $HOME/bin $PATH
+
+if which ssh-agent > /dev/null ^ /dev/null
+	eval (ssh-agent -c) > /dev/null ^ /dev/null
+	ssh-add ~/.ssh/*rsa > /dev/null ^ /dev/null
+end
+
+alias uptime='uptime -p'
+alias tree='tree -FC'
+

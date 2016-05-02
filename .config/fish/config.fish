@@ -29,6 +29,7 @@ function fish_prompt
 end
 
 set PATH $HOME/bin $PATH
+setenv EDITOR vim
 
 if which ssh-agent > /dev/null ^ /dev/null
 	if not pgrep -u $USER ssh-agent > /dev/null ^ /dev/null

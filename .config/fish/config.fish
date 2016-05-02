@@ -31,8 +31,13 @@ end
 set PATH $HOME/bin $PATH
 
 if which ssh-agent > /dev/null ^ /dev/null
-	eval (ssh-agent -c) > /dev/null ^ /dev/null
-	ssh-add ~/.ssh/*rsa > /dev/null ^ /dev/null
+	if not pgrep -u $USER ssh-agent > /dev/null ^ /dev/null
+		ssh-agent -c > ~/.ssh-agent-details
+		eval (cat ~/.ssh-agent-details) > /dev/null ^ /dev/null
+		ssh-add ~/.ssh/*rsa > /dev/null ^ /dev/null
+	else
+		eval (cat ~/.ssh-agent-details) > /dev/null ^ /dev/null
+	end
 end
 
 alias uptime='uptime -p'

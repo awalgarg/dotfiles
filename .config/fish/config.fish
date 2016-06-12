@@ -26,6 +26,7 @@ function fish_prompt
 end
 
 set PATH $HOME/bin $PATH
+set -x LANG 'en_US.UTF-8'
 setenv EDITOR vim
 
 if which ssh-agent > /dev/null ^ /dev/null
@@ -40,4 +41,3 @@ end
 
 alias uptime='uptime -p'
 alias tree='tree -FC'
-

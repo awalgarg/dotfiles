@@ -179,9 +179,9 @@ focus_follows_mouse no
 # this was copy pasted from http://i3wm.org/docs/userguide.html#_changing_colors
 # and then some colors are manually edited
 # class                 border  backgr. text    indicator
-client.focused          #000000 #222222 #ffffff #2e9ef4
+client.focused          #333333 #2d2d2d #ffffff #484A42
 client.focused_inactive #333333 #5f676a #ffffff #484e50
-client.unfocused        #555555 #555555 #888888 #292d2e
+client.unfocused        #333333 #2d2d2d #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000
 client.background       #ffffff
@@ -220,7 +220,7 @@ bar {
         status_command i3status -c ~/.config/i3/i3status.conf
         tray_output primary
         colors {
-            background #555555
+            background #2d2d2d
             statusline #ffffff
         }
         position top

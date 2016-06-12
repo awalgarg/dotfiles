@@ -10,3 +10,7 @@ rofi.color-active: #2d2d2d, #ffffff, #2d2d2d, #222222, #eeeeee
 rofi.color-urgent: #2d2d2d, #ffb964, #2d2d2d, #222222, #ffb964
 rofi.kb-row-select: Tab
 rofi.kb-row-tab: 
+rofi.line-margin: 0
+rofi.font: inconsolata 13
+rofi.bw: 0
+rofi.separator-style: none

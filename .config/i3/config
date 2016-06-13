@@ -131,8 +131,6 @@ bindsym $mod+Shift+t exec i3-input -F 'move container to workspace "%s"' -P 'Wor
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
-bindsym Mod1+Tab focus right
-bindsym Mod1+Shift+Tab focus left
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -167,8 +165,13 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
 bindsym $mod+r mode "resize"
+
+# mode for debugging!
+mode "unbind" {
+	bindsym $mod+Shift+Escape mode "default"
+}
+bindsym $mod+Shift+u mode "unbind"
 
 bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/lockscreen.png
 

@@ -15,6 +15,13 @@ set __fish_git_prompt_char_stashstate '↩'
 set __fish_git_prompt_char_upstream_ahead '+'
 set __fish_git_prompt_char_upstream_behind '-'
 
+function fish_user_key_bindings
+	# bind shift-up and shift-down to attribute search
+	# these are bound to alt-up and alt-down in the defaults
+	# but we use them in tmux, so we add these alternatives here
+	bind $argv \e\[1\;2A history-token-search-backward
+	bind $argv \e\[1\;2B history-token-search-forward
+end
 
 function fish_prompt
 	set last_status $status

@@ -19,6 +19,8 @@ set backupskip=/tmp*
 set directory=~/.vim/backup//
 set writebackup
 
+set mouse=a
+
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 

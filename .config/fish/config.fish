@@ -25,6 +25,11 @@ end
 
 function fish_prompt
 	set last_status $status
+	if test -n "$SSH_CONNECTION"
+		set_color $fish_color_cwd_root
+		printf '[%s] ' (uname -n)
+		set_color normal
+	end
 	set_color $fish_color_cwd
 	printf '%s' (prompt_pwd)
 	set_color normal

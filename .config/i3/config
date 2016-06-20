@@ -44,6 +44,8 @@ bindsym $mod+p exec rofi -show window -fuzzy
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+bindsym $mod+shift+Return exec ~/bin/rofi-tmux
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down

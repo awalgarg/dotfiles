@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+
+# filename: rofi-tmux
+# author: Awal Garg <http://awal.js.org>
+# license: wtfpl
+
+from subprocess import Popen, PIPE, DEVNULL
+from datetime import datetime
+
+app_conf = {
+        'menu': ['rofi', '-dmenu', '-mesg', 'Choose session or create new one!', '-p', '> '],
+        'term': ['sakura', '-e'],
+}
+
+def session_list():
+    sep = ':'
+    props = [
+            'id',
+            'name',
+            'windows',
+            'attached',
+            'created',
+            ]
+    format_str = sep.join([ '#{session_%s}' % prop for prop in props ])
+
+    rp = Popen(['tmux', 'list-sessions', '-F', format_str], stdout=PIPE)
+    rp.wait()
+
+    if rp.returncode != 0:
+        # tmux server not running or no sessions
+        return []
+
+    raw_sessions = rp.stdout.read().decode().strip().split('\n')
+
+    def create_session_obj(session_data):
+        o = dict()
+        for prop, val in zip(props, session_data.split(sep)):
+            o[prop] = val
+        return o
+
+    sessions = list(map(create_session_obj, raw_sessions))
+
+    return sessions
+
+def format_menu_item(session):
+    return '{name} - {windows} windows - created at {created} - ({attach_status})'.format(
+                name=session.get('name', ''),
+                windows=session.get('windows', ''),
+                created=datetime.fromtimestamp(float(session.get('created', '0'))).strftime('%a %d %b %I:%M %p'),
+                attach_status='Attached' if int(session.get('attached', '0')) else 'Dettached',
+                )
+
+def get_user_choice(items):
+    menu_pipe_data = '\n'.join(items)
+    user_choice = Popen(app_conf.get('menu', ['dmenu']), stdout=PIPE, stdin=PIPE).communicate(input=menu_pipe_data.encode())[0]
+    return user_choice.decode().strip()
+
+def launch_term_with_cmd(cmd):
+    # TODO: this might error out, but not sure how to handle that
+    # the terminal emulator does not carry forward the exit code of the run command
+    # so we can't detect errors from here. must do error handling in the shell command itself
+    # which requires wrapping command to run in sh so we can deal with different shells
+    # fuck this shit, I am going to bed
+    Popen(app_conf.get('term', ['xterm', '-e']) + [cmd], stdout=DEVNULL, stderr=DEVNULL)
+
+def escape_quotes(name):
+    # escape quotes for safe terminal usage
+    return name.replace('"', '\\"')
+
+def launch_session(session_name):
+    return launch_term_with_cmd('tmux att -t \"%s\"' % session_name)
+
+def create_session_and_launch(session_name, cwd):
+    return launch_term_with_cmd('tmux new -s \"%s\" -c \"%s\"' % (session_name, cwd))
+
+def runner():
+    sessions = session_list()
+    items = list(map(format_menu_item, sessions))
+    choice = get_user_choice(items)
+    if not choice:
+        # user hit escape or something, what a slacker
+        return
+
+    try:
+        session = sessions[items.index(choice)]
+        launch_session(escape_quotes(session.get('name')))
+    except ValueError:
+        # choice not in list
+        parts = choice.split(' ', 1)
+        session_name = escape_quotes(parts[0])
+        cwd = escape_quotes(parts[1]) if len(parts) > 1 else '~'
+        create_session_and_launch(session_name, cwd)
+
+if __name__ == '__main__':
+    runner()

@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+
+# filename: dfzf
+# author: Awal Garg <http://awal.js.org>
+# license: wtfpl
+# description: dmenu/rofi alternative which uses fzf and sakura
+
+import sys
+import tempfile
+import argparse
+from subprocess import Popen, PIPE, DEVNULL
+
+parser = argparse.ArgumentParser(description='dmenu alternative')
+parser.add_argument('-i', '--info')
+args = parser.parse_args()
+
+app_conf = {
+        'fzf': 'fzf --print-query +m --reverse -i -e',
+        'term': ['sakura', '--class', 'sakura_dfzf', '-e'],
+}
+
+if args.info:
+    app_conf['fzf'] += '  --header "' + args.info.replace('"', '\\"') + '"'
+
+
+# grab data from stdin
+stdin_content = sys.stdin.read()
+
+# store stdin in temp file
+stdin_proxy = tempfile.NamedTemporaryFile('w')
+stdin_proxy.write(stdin_content)
+stdin_proxy.flush()
+
+# create file to store fzf's output
+stdout_proxy = tempfile.NamedTemporaryFile()
+
+# command to execute inside sakura
+# sends contents of stdin stored in temp file to fzf
+# and sends output of fzf to temp file for stdout
+# TODO: cleanup the generation of this command and handle escaping
+realcmd = 'sh -c "cat \"%s\" | %s > \"%s\""' % (stdin_proxy.name, app_conf.get('fzf', 'fzf').replace('"', '\\"'), stdout_proxy.name)
+
+# launch terminal!
+ps = Popen(app_conf.get('term', ['xterm', '-e']) + [realcmd], stderr=DEVNULL)
+ps.wait()
+
+# go to the beginning of the stdout file and store contents
+stdout_proxy.seek(0)
+fzf_output = stdout_proxy.read().decode().strip()
+
+# close both temp files
+stdin_proxy.close()
+stdout_proxy.close()
+
+# return non-successful exit code if user didn't chose anything
+if not len(fzf_output):
+    quit(1)
+
+# put query below choice for compatibility with dmenu
+fzf_output = fzf_output.split('\n')
+fzf_output.reverse()
+
+# send output to stdout
+print('\n'.join(fzf_output))
+
+# sigh, that was more roundabout than expected
+# fuck all terminal emulators for making this so hard

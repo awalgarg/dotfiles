@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# filename: rofi-tmux
+# filename: tmux-menu
 # author: Awal Garg <http://awal.js.org>
 # license: wtfpl
 
@@ -8,7 +8,7 @@ from subprocess import Popen, PIPE, DEVNULL
 from datetime import datetime
 
 app_conf = {
-        'menu': ['rofi', '-dmenu', '-mesg', 'Choose session or create new one!', '-p', '> '],
+        'menu': ['dfzf', '-i', 'Choose a session or create a new one!'],
         'term': ['sakura', '-e'],
 }
 
@@ -53,7 +53,7 @@ def format_menu_item(session):
 def get_user_choice(items):
     menu_pipe_data = '\n'.join(items)
     user_choice = Popen(app_conf.get('menu', ['dmenu']), stdout=PIPE, stdin=PIPE).communicate(input=menu_pipe_data.encode())[0]
-    return user_choice.decode().strip()
+    return user_choice.decode().strip().split('\n')[0]
 
 def launch_term_with_cmd(cmd):
     # TODO: this might error out, but not sure how to handle that

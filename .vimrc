@@ -1,4 +1,5 @@
 syntax enable
+let g:seoul256_background = 235
 colorscheme seoul256
 set cursorline
 

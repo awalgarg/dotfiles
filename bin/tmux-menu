@@ -8,7 +8,7 @@ from subprocess import Popen, PIPE, DEVNULL
 from datetime import datetime
 
 app_conf = {
-        'menu': ['dfzf', '-i', 'Choose a session or create a new one!'],
+        'menu': ['dmenu', '-p', 'tmux', '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
         'term': ['sakura', '-e'],
 }
 

@@ -1,4 +1,4 @@
 #!/bin/sh
 
-echo "$(xsel --clipboard)"
+echo -n "$(xsel --clipboard)"
 

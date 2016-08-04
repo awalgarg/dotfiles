@@ -35,10 +35,11 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-# TODO: compgen also spits out shell keywords, we should filter those out
-bindsym $mod+d exec sh -c '$(compgen -c | dfzf -i "Choose command to run!" | head -n 1)'
-bindsym $mod+Shift+d exec i3-dmenu-desktop --dmenu='dfzf -i "Choose Application"'
+set $dmenu_args -sb '#333' -nb '#222' -l 5 -fn 'Inconsolata'
+
+# start dmenu (a program launcher) wrapped in our custom history bubbler
+bindsym $mod+d exec sh -c dmenu_path | ~/bin/menu-hist-wrap "dmenu -p Run: $dmenu_args" $HOME/.cache/dmenu-run-hist | ${SHELL:-"/bin/sh"}
+bindsym $mod+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -p 'Launch:' $dmenu_args"
 bindsym $mod+p exec rofi -show window -fuzzy
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that

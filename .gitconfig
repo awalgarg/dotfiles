@@ -4,4 +4,4 @@
 [push]
 	default = simple
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%cn)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right

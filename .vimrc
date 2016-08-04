@@ -23,6 +23,7 @@ set mouse=a
 
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
+nnoremap <F5> i**<C-r>=strftime('%A %d %B %r')<cr>**<cr>
 
 map <Esc>[B <Down>
 
@@ -36,3 +37,10 @@ endif
 
 set wildmenu
 set wildmode=full
+
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction

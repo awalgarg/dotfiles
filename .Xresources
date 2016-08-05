@@ -4,14 +4,19 @@ Xft.lcdfilter: lcddefault
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------
 rofi.color-enabled: true
-rofi.color-window: #2d2d2d, #002b36, #000000
-rofi.color-normal: #2d2d2d, #ffffff, #2d2d2d, #2d2d2d, #ffb964
-rofi.color-active: #2d2d2d, #ffffff, #2d2d2d, #222222, #eeeeee
-rofi.color-urgent: #2d2d2d, #ffb964, #2d2d2d, #222222, #ffb964
+rofi.color-window: #202020, #202020, #202020
+rofi.color-normal: argb:0202020, #fafafa, #202020, #303030, #ffffff
+rofi.color-active: #303030, #ffffff, #303030, #303030, #ffffff
+rofi.color-urgent: #202020, #ffffff, #202020, #202020, #ffffff
+
 rofi.kb-row-select: Tab
 rofi.kb-row-tab: 
 rofi.kb-row-down: Down
 rofi.line-margin: 0
-rofi.font: inconsolata 13
+rofi.font: inconsolata 12
 rofi.bw: 0
+rofi.padding: 1
 rofi.separator-style: none
+rofi.display-run: Run
+rofi.display-drun: Launch
+rofi.terminal: sakura

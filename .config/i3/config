@@ -35,12 +35,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-set $dmenu_args -sb '#333' -nb '#222' -l 5 -fn 'Inconsolata'
-
-# start dmenu (a program launcher) wrapped in our custom history bubbler
-bindsym $mod+d exec sh -c dmenu_path | ~/bin/menu-hist-wrap "dmenu -p Run: $dmenu_args" $HOME/.cache/dmenu-run-hist | ${SHELL:-"/bin/sh"}
-bindsym $mod+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -p 'Launch:' $dmenu_args"
-bindsym $mod+p exec rofi -show window -fuzzy
+# start rofi (a program launcher)
+bindsym $mod+d exec "rofi -show run -location 2 -width 100 -lines 5 -sidebar-mode -modi run,ssh,window,drun"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.

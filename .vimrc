@@ -25,6 +25,8 @@ set mouse=a
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 nnoremap <F5> i**<C-r>=strftime('%A %d %B %r')<cr>**<cr>
+vnoremap <C-c> "+y
+cnoreabbrev W w
 
 map <Esc>[B <Down>
 

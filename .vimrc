@@ -41,6 +41,9 @@ endif
 set wildmenu
 set wildmode=full
 
+highlight TrailingWhitespace ctermbg=darkgray guibg=darkgray
+match TrailingWhitespace /\s\+$\| \+\ze\t/
+
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 function! ExecuteMacroOverVisualRange()

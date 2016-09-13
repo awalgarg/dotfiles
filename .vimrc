@@ -3,6 +3,7 @@ let g:seoul256_background = 235
 colorscheme seoul256
 set cursorline
 set hlsearch
+set incsearch
 
 execute pathogen#infect()
 let $PYTHONPATH='/usr/lib/python3.5/site-packages'

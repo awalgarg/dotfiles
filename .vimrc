@@ -2,6 +2,7 @@ syntax enable
 let g:seoul256_background = 235
 colorscheme seoul256
 set cursorline
+set hlsearch
 
 execute pathogen#infect()
 let $PYTHONPATH='/usr/lib/python3.5/site-packages'
@@ -25,6 +26,7 @@ set mouse=a
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 nnoremap <F5> i**<C-r>=strftime('%A %d %B %r')<cr>**<cr>
+nnoremap <C-l> :nohlsearch<CR>
 vnoremap <C-c> "+y
 cnoreabbrev W w
 

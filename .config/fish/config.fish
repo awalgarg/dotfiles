@@ -52,5 +52,9 @@ if which ssh-agent > /dev/null ^ /dev/null
 	end
 end
 
+if status --is-interactive
+	eval sh $HOME/.config/fish/color-scheme.sh
+end
+
 alias uptime='uptime -p'
 alias tree='tree -FC'

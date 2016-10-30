@@ -20,12 +20,12 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias ll='ls -lh'
 alias tree='tree -FC'
-alias uptime="uptime -p"
+alias uptime='uptime -p'
 
 export PATH="$HOME/bin:$PATH"
-export LANG="en_US.UTF-8"
-export EDITOR="vim"
-export TERMINAL="sakura"
+export LANG='en_US.UTF-8'
+export EDITOR='vim'
+export TERMINAL='sakura'
 
 function __bash__prompt {
 	local RED="\[\033[0;31m\]"

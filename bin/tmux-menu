@@ -43,11 +43,11 @@ def session_list():
     return sessions
 
 def format_menu_item(session):
-    return '{name} - {windows} windows - created at {created} [{attach_status}]'.format(
+    return '{name} | {windows} windows, created at {created} [{attach_status}]'.format(
                 name=session.get('name', ''),
                 windows=session.get('windows', ''),
                 created=datetime.fromtimestamp(float(session.get('created', '0'))).strftime('%a %d %b %I:%M %p'),
-                attach_status='Attached' if int(session.get('attached', '0')) else 'Dettached',
+                attach_status='Attached' if int(session.get('attached', '0')) else 'Detached',
                 )
 
 def get_user_choice(items):

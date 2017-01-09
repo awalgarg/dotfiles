@@ -205,7 +205,6 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+F1 exec sakura -x ranger --class=sakura_ranger
 bindsym $mod+F2 exec sakura -x vim --class=sakura_vim
 bindsym $mod+F3 exec subl3
-bindsym $mod+F4 exec sakura -x irssi --class=sakura_irssi
 
 # Multimedia Keys
 # increase volume

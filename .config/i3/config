@@ -181,13 +181,19 @@ focus_follows_mouse no
 # color scheme! (looks archy)
 # this was copy pasted from http://i3wm.org/docs/userguide.html#_changing_colors
 # and then some colors are manually edited
-# class                 border  backgr. text    indicator
-client.focused          #333333 #2d2d2d #ffffff #484A42
-client.focused_inactive #333333 #5f676a #ffffff #484e50
-client.unfocused        #333333 #2d2d2d #888888 #292d2e
-client.urgent           #2f343a #900000 #ffffff #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000
-client.background       #ffffff
+set $highlight_txt		#ffffff
+set $dim_txt			#888888
+set $subtle_bg			#2d2d2d
+set $dim_bg				#888888
+set $highlight_border	#444444
+set $dim_border			#222222
+# class					border		background	text			indicator	child_border
+client.focused			$subtle_bg	$subtle_bg	$highlight_txt	$dim_txt	$highlight_border
+client.focused_inactive	$subtle_bg	$subtle_bg	$highlight_txt	$dim_txt	$dim_border
+client.unfocused		$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	$dim_border
+client.urgent			$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	#ff0000
+client.placeholder		$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	$dim_border
+client.background		$subtle_bg
 
 # this moves stuff to a "hidden" workspace which acts like a bin
 bindsym $mod+Shift+minus move scratchpad
@@ -219,6 +225,7 @@ for_window [class="sakura_irssi"] title_format " irssi (%title)"
 for_window [class="sakura_dfzf"] floating enable
 for_window [class="sakura_dfzf"] resize set 640px 300px
 for_window [class="sakura_dfzf"] move position center
+for_window [instance="sakura" tiling] border pixel 1
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -226,12 +233,12 @@ bar {
         status_command i3status -c ~/.config/i3/i3status.conf
         tray_output primary
         colors {
-            background #2d2d2d
+            background $subtle_bg
             statusline #ffffff
         }
         position top
 }
 
-new_window pixel 1
+new_window pixel 0
 
 exec feh --randomize --bg-scale ~/.config/i3/wallpapers/* --no-fehbg

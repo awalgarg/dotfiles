@@ -220,10 +220,6 @@ for_window [class="(?i)firefox"] title_format " %title"
 for_window [class="(?i)google-chrome"] title_format " %title"
 for_window [class="sakura_ranger"] title_format " %title"
 for_window [class="sakura_vim"] title_format "  vim (%title)"
-for_window [class="sakura_irssi"] title_format " irssi (%title)"
-for_window [class="sakura_dfzf"] floating enable
-for_window [class="sakura_dfzf"] resize set 640px 300px
-for_window [class="sakura_dfzf"] move position center
 for_window [instance="sakura" tiling] border pixel 1
 
 # Start i3bar to display a workspace bar (plus the system information i3status

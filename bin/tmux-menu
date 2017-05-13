@@ -61,17 +61,17 @@ def launch_term_with_cmd(cmd):
     # so we can't detect errors from here. must do error handling in the shell command itself
     # which requires wrapping command to run in sh so we can deal with different shells
     # fuck this shit, I am going to bed
-    Popen(app_conf.get('term', ['xterm', '-e']) + [cmd], stdout=DEVNULL, stderr=DEVNULL)
+    Popen(app_conf.get('term', ['xterm', '-e']) + cmd, stdout=DEVNULL, stderr=DEVNULL)
 
 def escape_quotes(name):
     # escape quotes for safe terminal usage
     return name.replace('"', '\\"')
 
 def launch_session(session_name):
-    return launch_term_with_cmd('tmux att -t \"%s\"' % session_name)
+    return launch_term_with_cmd(['tmux', 'att', '-t', session_name])
 
 def create_session_and_launch(session_name, cwd):
-    return launch_term_with_cmd('tmux new -s \"%s\" -c \"%s\"' % (session_name, cwd))
+    return launch_term_with_cmd(['tmux', 'new', '-s', session_name, '-c', cwd])
 
 def runner():
     sessions = session_list()

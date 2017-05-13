@@ -9,7 +9,7 @@ from datetime import datetime
 
 app_conf = {
         'menu': ['dmenu', '-p', 'tmux', '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
-        'term': ['sakura', '-e'],
+        'term': ['st', '-e'],
 }
 
 def session_list():

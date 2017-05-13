@@ -40,7 +40,6 @@ end
 set PATH $HOME/bin $PATH
 set -x LANG 'en_US.UTF-8'
 setenv EDITOR vim
-setenv TERMINAL sakura
 
 if which ssh-agent > /dev/null ^ /dev/null
 	if not pgrep -u $USER ssh-agent > /dev/null ^ /dev/null

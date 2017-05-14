@@ -20,11 +20,6 @@ alias ll='ls -lh'
 alias tree='tree -FC'
 alias uptime='uptime -p'
 
-export PATH="$HOME/bin:$PATH"
-export LANG='en_US.UTF-8'
-export EDITOR='vim'
-export TERMINAL='sakura'
-
 autoload -Uz colors && colors
 function __zsh__prompt {
 	local RED="\[\033[0;31m\]"

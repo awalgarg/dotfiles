@@ -1,3 +1,7 @@
+if status is-login
+	source ~/.config/fish/login.fish
+end
+
 # Fish git prompt
 set __fish_git_prompt_showdirtystate 'yes'
 set __fish_git_prompt_showstashstate 'yes'
@@ -35,20 +39,6 @@ function fish_prompt
 	set_color normal
 	printf '%s ' (__fish_git_prompt)
 	set_color normal
-end
-
-set PATH $HOME/bin $PATH
-set -x LANG 'en_US.UTF-8'
-setenv EDITOR vim
-
-if which ssh-agent > /dev/null ^ /dev/null
-	if not pgrep -u $USER ssh-agent > /dev/null ^ /dev/null
-		ssh-agent -c > ~/.ssh-agent-details
-		eval (cat ~/.ssh-agent-details) > /dev/null ^ /dev/null
-		ssh-add ~/.ssh/*rsa > /dev/null ^ /dev/null
-	else
-		eval (cat ~/.ssh-agent-details) > /dev/null ^ /dev/null
-	end
 end
 
 alias uptime='uptime -p'

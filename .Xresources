@@ -20,4 +20,4 @@ rofi.padding: 1
 rofi.separator-style: none
 rofi.display-run: Run
 rofi.display-drun: Launch
-rofi.terminal: sakura
+rofi.terminal: st

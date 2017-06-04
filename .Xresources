@@ -1,5 +1,5 @@
 Xft.lcdfilter: lcddefault
-Xft.dpi: 102
+Xft.dpi: 140
 
 ! ------------------------------------------------------------------------------
 ! ROFI Color theme
@@ -14,7 +14,7 @@ rofi.kb-row-select: Tab
 rofi.kb-row-tab: 
 rofi.kb-row-down: Down
 rofi.line-margin: 0
-rofi.font: inconsolata 12
+rofi.font: inconsolata 14
 rofi.bw: 0
 rofi.padding: 1
 rofi.separator-style: none

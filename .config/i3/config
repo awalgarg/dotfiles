@@ -178,4 +178,4 @@ bindsym F1 bar hidden_state toggle
 
 new_window pixel 0
 
-exec feh --randomize --bg-scale ~/.config/i3/wallpapers/* --no-fehbg
+exec_always feh --bg-scale ~/.config/i3/wallpapers/warrior.png --no-fehbg

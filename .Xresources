@@ -6,7 +6,7 @@ Xft.dpi: 140
 ! ------------------------------------------------------------------------------
 rofi.color-enabled: true
 rofi.color-window: #202020, #202020, #202020
-rofi.color-normal: argb:0202020, #fafafa, #202020, #303030, #ffffff
+rofi.color-normal: argb:02020202, #fafafa, #202020, #303030, #ffffff
 rofi.color-active: #303030, #ffffff, #303030, #303030, #ffffff
 rofi.color-urgent: #202020, #ffffff, #202020, #202020, #ffffff
 

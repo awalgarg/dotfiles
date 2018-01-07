@@ -29,6 +29,7 @@ nnoremap <C-Right> :tabnext<CR>
 nnoremap <F5> i**<C-r>=strftime('%A %d %B %Y %r')<cr>**<cr>
 nnoremap <C-l> :nohlsearch<CR>
 vnoremap <C-c> "+y
+inoremap <C-p> <C-o>"+p
 cnoreabbrev W w
 
 map <Esc>[B <Down>

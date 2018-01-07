@@ -115,6 +115,11 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+mode "nobind" {
+	bindsym $mod+Escape mode "default"
+}
+bindsym $mod+Escape mode "nobind"
+
 bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/lockscreen.png
 
 hide_edge_borders both

@@ -1,54 +1,33 @@
 # dotfiles
 
-(ir)relevant stuff I us
+I use these on Arch Linux, Void Linux, and some Ubuntu machines. Use at
+your own risk, of course. There is a branch for 768p screens but it is
+not maintained anymore.
 
-- Arch Linux
+Includes configurations for:
+
 - i3wm
-- fish shell
-- fzf
-- ranger
-- tmux
-- vim
-- Sublime Text 3
-- rofi
-- sakura
-- FontAwesome font
-- Inconsolata font
-- irssi
-- alsa
-- firefox-developer
-- google-chrome-unstable
-- tree
-- git
+- X11
 - zathura
-- pathogen.vim
-- seoul256.vim
-- goyo.vim
-- limelight.vim
+- bash
+- feh
+- fish
+- mpv
+- ranger
+- git
+- vim
+- zsh
+- st
+- tmux
 
-# stuff
+Has some shell scripts in `bin/` expected to be in `$PATH`.
 
-wallpapers and lockscreen generated at <http://demon000.github.io/archwg/> with the following config:
-
-- Width: 1366
-- Height: 768
-- Background: #2d2d2d
-- Logo size: 128px
-- Logo color: #eee
-- Font size: 32px
-- Font family: Inconsolata
-- Text color: #eee
-- Text: `<br>{some text here}`
-
-icons for status bar in i3 are fontawesome glyphs
-
-scripts in `bin` are handwritten for ease. for example, copying selected text in vim is just `:w !ctrlc` and pasting from clipboard is `r !ctrlv` for X11 clipboard.
-
-# shortcuts
+Wallpaper was provided by someone in #voidlinux on freenode, edited a
+bit for personal usage.
 
 ## tmux
 
-all bindings listed below are global. they don't require the prefix.
+All bindings listed below are global. they don't require the prefix.
 
 - `alt-t` new terminal, horizontal split
 - `alt-shift-t` new terminal, vertical split
@@ -61,20 +40,18 @@ all bindings listed below are global. they don't require the prefix.
 - `alt-{1-9}` switch to nth window
 - `alt-shift-{1-9}` move pane to nth window
 - `alt-tab` next window
-- `alt-e` create new split and open vim inside it exploring current directory
+- `alt-e` create new split and open vim inside it exploring current
+  directory
 
-that covers 90% of the actions we generally do, and for the rest 10%, the prefix is `alt-grave` and the usual default bindings that come with tmux.
+That covers 90% of the actions we generally do, and for the rest 10%,
+the prefix is `alt-grave` and the usual default bindings that come with
+tmux.
 
-additionally mouse mode is enabled, and panes which capture mouse events recieve them transparently. so scrolling works both in ncurses apps and regular panes.
+Additionally mouse mode is enabled, and panes which capture mouse events
+receive them transparently. So scrolling works both in ncurses apps and
+regular panes.
 
-## vim
-
-dunno I just copy pasted bits from the internet until it worked, but hey, I use vim!
-
-# license
-
-wtfpl
-
-# author
+# Author
 
 Awal Garg <awalgarg@gmail.com>
+

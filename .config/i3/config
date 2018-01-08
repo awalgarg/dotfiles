@@ -99,16 +99,16 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # resize window (you can also use the mouse for that)
 mode "resize" {
 	# These bindings trigger as soon as you enter the resize mode
-	
+
 	# resize with arrow keys
 	bindsym Left resize shrink width 5 px or 5 ppt
 	bindsym Down resize grow height 5 px or 5 ppt
 	bindsym Up resize shrink height 5 px or 5 ppt
 	bindsym Right resize grow width 5 px or 5 ppt
-	
+
 	# renaming custom workspaces happens only in resize mode!
 	bindsym $mod+t exec i3-input -F 'rename workspace to "%s"' -P 'Workspace Name: '
-	
+
 	# back to normal: Enter or Escape
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -120,7 +120,7 @@ mode "nobind" {
 }
 bindsym $mod+Escape mode "nobind"
 
-bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/lockscreen.png
+bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/images/lockscreen-warrior.png
 
 hide_edge_borders both
 focus_follows_mouse no
@@ -171,8 +171,8 @@ bar {
 	status_command i3status -c ~/.config/i3/i3status.conf
 	tray_output primary
 	colors {
-	    background $subtle_bg
-	    statusline #ffffff
+		background $subtle_bg
+		statusline #ffffff
 	}
 	position top
 	mode hide
@@ -183,4 +183,5 @@ bindsym F1 bar hidden_state toggle
 
 new_window pixel 0
 
-exec_always feh --bg-scale ~/.config/i3/wallpapers/warrior.png --no-fehbg
+exec_always feh --bg-scale ~/.config/i3/images/wallpaper-warrior.png --no-fehbg
+

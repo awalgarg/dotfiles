@@ -4,6 +4,7 @@ colorscheme seoul256
 set cursorline
 set hlsearch
 set incsearch
+set autoindent
 
 execute pathogen#infect()
 let $PYTHONPATH='/usr/lib/python3.5/site-packages'

@@ -120,7 +120,7 @@ mode "nobind" {
 }
 bindsym $mod+Escape mode "nobind"
 
-bindsym $mod+Shift+L exec i3lock -b -e -f --image ~/.config/i3/images/lockscreen-warrior.png
+bindsym $mod+Shift+L exec i3lock -b -e -f --tiling --image ~/.config/i3/images/lockscreen-warrior.png
 
 hide_edge_borders both
 focus_follows_mouse no

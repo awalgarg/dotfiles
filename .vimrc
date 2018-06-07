@@ -5,6 +5,7 @@ set cursorline
 set hlsearch
 set incsearch
 set autoindent
+set belloff=all " disable annoying screen flashes urgency flags on terminals
 
 execute pathogen#infect()
 let $PYTHONPATH='/usr/lib/python3.5/site-packages'

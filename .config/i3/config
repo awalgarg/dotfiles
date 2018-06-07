@@ -21,6 +21,9 @@ bindsym $mod+d exec "rofi -show run -location 2 -width 100 -lines 5 -sidebar-mod
 bindsym F2 exec "rofi -show window"
 bindsym $mod+shift+Return exec ~/bin/tmux-menu
 
+# by default i3 would make focus change go through screens, lets disable that
+force_focus_wrapping yes
+
 # change focus
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down

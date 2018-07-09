@@ -1,30 +1,23 @@
+filetype plugin indent on
 syntax enable
-let g:seoul256_background = 235
-colorscheme seoul256
-set cursorline
+
 set hlsearch
 set incsearch
 set autoindent
-set belloff=all " disable annoying screen flashes urgency flags on terminals
-
-execute pathogen#infect()
-let $PYTHONPATH='/usr/lib/python3.5/site-packages'
-let g:ctrlp_custom_ignore='node_modules\|vendor\|.git'
-filetype plugin indent on
-" show existing tab with 4 spaces width
+set belloff=all
 set tabstop=4
-" when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
-" set expandtab
 set title
 set backup
 set backupdir=~/.vim/backup//
 set backupskip=/tmp*
 set directory=~/.vim/backup//
 set writebackup
-
 set mouse=a
+set wildmenu
+set wildmode=full
+
+cnoreabbrev W w
 
 nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
@@ -32,9 +25,20 @@ nnoremap <F5> i**<C-r>=strftime('%A %d %B %Y %r')<cr>**<cr>
 nnoremap <C-l> :nohlsearch<CR>
 vnoremap <C-c> "+y
 inoremap <C-p> <C-o>"+p
-cnoreabbrev W w
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
-map <Esc>[B <Down>
+highlight TrailingWhitespace ctermbg=darkgray guibg=darkgray
+match TrailingWhitespace /\s\+$\| \+\ze\t/
+
+execute pathogen#infect()
+
+let g:seoul256_background = 235
+colorscheme seoul256
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
 
 if &term =~ '^screen'
 	" tmux will send xterm-style keys when its xterm-keys option is on
@@ -43,16 +47,3 @@ if &term =~ '^screen'
 	execute "set <xRight>=\e[1;*C"
 	execute "set <xLeft>=\e[1;*D"
 endif
-
-set wildmenu
-set wildmode=full
-
-highlight TrailingWhitespace ctermbg=darkgray guibg=darkgray
-match TrailingWhitespace /\s\+$\| \+\ze\t/
-
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction

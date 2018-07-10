@@ -32,7 +32,6 @@ match TrailingWhitespace /\s\+$\| \+\ze\t/
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/seoul256.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 call plug#end()
 
 let g:seoul256_background = 235

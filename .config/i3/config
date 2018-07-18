@@ -161,6 +161,7 @@ bindsym XF86AudioMute exec amixer -D pulse -q set Master toggle
 # requires the Font-Awesome font
 for_window [class="(?i)firefox"] title_format " %title"
 for_window [class="(?i)google-chrome"] title_format " %title"
+for_window [class="feh"] floating enable
 
 # status bar
 bar {

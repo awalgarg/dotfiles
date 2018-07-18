@@ -161,12 +161,10 @@ bindsym XF86AudioMute exec amixer -D pulse -q set Master toggle
 # requires the Font-Awesome font
 for_window [class="(?i)firefox"] title_format " %title"
 for_window [class="(?i)google-chrome"] title_format " %title"
-for_window [class="xterm-256color" tiling] border pixel 1
 
 # status bar
 bar {
 	status_command i3status -c ~/.config/i3/i3status.conf
-	tray_output primary
 	colors {
 		background $subtle_bg
 		statusline #ffffff
@@ -181,4 +179,3 @@ bindsym F1 bar hidden_state toggle
 new_window pixel 0
 
 exec_always feh --bg-scale ~/.config/i3/images/wallpaper-warrior.png --no-fehbg
-

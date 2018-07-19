@@ -149,10 +149,6 @@ bindsym $mod+Shift+minus move scratchpad
 # gets last window moved to bin to current workspace in floating mode
 bindsym $mod+minus scratchpad show
 
-bindsym $mod+F1 exec st -c file_manager -e ranger
-bindsym $mod+F2 exec st -c editor -e vim
-bindsym $mod+F3 exec subl3
-
 # Multimedia Keys
 # increase volume
 bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
@@ -161,12 +157,10 @@ bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
 # mute volume
 bindsym XF86AudioMute exec amixer -D pulse -q set Master toggle
 
-# add icons to firefox and chrome and ranger windows
+# add icons to title bars of known applications
 # requires the Font-Awesome font
 for_window [class="(?i)firefox"] title_format " %title"
 for_window [class="(?i)google-chrome"] title_format " %title"
-for_window [class="file_manager"] title_format " %title"
-for_window [class="editor"] title_format "  (%title)"
 for_window [class="xterm-256color" tiling] border pixel 1
 
 # status bar

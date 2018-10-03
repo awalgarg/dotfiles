@@ -45,8 +45,7 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+# change container layout (tabbed, toggle split)
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -63,10 +62,10 @@ bindsym $mod+a focus parent
 bindsym $mod+Shift+a focus child
 
 # switch workspace
-bindsym $mod+t exec i3-input -F 'workspace "%s"' -P 'Workspace Name: '
+bindsym $mod+s exec i3-workspace-menu
 
 # move focused container to workspace
-bindsym $mod+Shift+t exec i3-input -F 'move container to workspace "%s"' -P 'Workspace Name: '
+bindsym $mod+Shift+s exec i3-workspace-menu --mode=move
 
 bindsym $mod+Tab workspace next_on_output
 bindsym $mod+Shift+Tab workspace prev_on_output

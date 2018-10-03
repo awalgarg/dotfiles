@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+
+# filename: i3-workspace-menu
+# author: Awal Garg <i3-workspace-menu@awalgarg.me>
+# license: wtfpl
+
+from subprocess import Popen, PIPE, DEVNULL
+from datetime import datetime
+import json
+import sys
+
+#XXX: move to runner function
+app_mode_move = '--mode=move' in sys.argv
+app_title = 'i3-move' if app_mode_move else 'i3-switch'
+
+app_conf = {
+        'menu': ['dmenu', '-p', app_title, '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
+}
+
+def workspace_list():
+    rp = Popen(['i3-msg', '-t', 'get_workspaces'], stdout=PIPE)
+    rp.wait()
+
+    if rp.returncode != 0:
+        print('Error: i3-msg returned non-zero exit code %d' % rp.returncode)
+        exit(1)
+
+    raw_json = rp.stdout.read().decode().strip()
+    return json.loads(raw_json)
+
+def format_menu_item(workspace):
+    return '{name} | {visibility_status} on {output} {focused_status} {urgency_status}'.format(
+                name=workspace.get('name', ''),
+                visibility_status='Visible' if workspace.get('visible', False) else 'Backgrounded',
+                output=workspace.get('output', '<unknown output>'),
+                focused_status='[focused]' if workspace.get('focused') else '[not focused]' if workspace.get('visible', False) else '',
+                urgency_status='[urgent]' if workspace.get('urgent', False) else '',
+                ).strip()
+
+def get_user_choice(items):
+    menu_pipe_data = '\n'.join(items)
+    user_choice = Popen(app_conf.get('menu', ['dmenu']), stdout=PIPE, stdin=PIPE).communicate(input=menu_pipe_data.encode())[0]
+    return user_choice.decode().strip().split('\n')[0]
+
+def switch_to_workspace(workspace_name):
+    Popen(['i3-msg', '-t', 'command', 'workspace', workspace_name])
+
+def move_to_workspace(workspace_name):
+    Popen(['i3-msg', '-t', 'command', 'move container to workspace', workspace_name])
+
+def runner():
+    workspaces = workspace_list()
+    items = list(map(format_menu_item, workspaces))
+    choice = get_user_choice(items)
+    if not choice:
+        # user hit escape or something, what a slacker
+        return
+
+    workspace_name = ''
+
+    try:
+        workspace_name = workspaces[items.index(choice)]['name']
+    except ValueError:
+        workspace_name = choice
+
+    if app_mode_move:
+        move_to_workspace(workspace_name)
+    else:
+        switch_to_workspace(workspace_name)
+
+if __name__ == '__main__':
+    runner()

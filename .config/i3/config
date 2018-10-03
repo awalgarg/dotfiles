@@ -89,8 +89,8 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 bindsym $mod+Shift+t exec i3-input -F 'move container to workspace "%s"' -P 'Workspace Name: '
 
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+Tab workspace next_on_output
+bindsym $mod+Shift+Tab workspace prev_on_output
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

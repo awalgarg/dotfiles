@@ -1,0 +1,20 @@
+configuration {
+	font: "inconsolata 14";
+	bw: 0;
+	padding: 1;
+	terminal: "st";
+	line-margin: 0;
+	separator-style: "none";
+
+	color-normal: "argb:02020202, #fafafa, #202020, #303030, #ffffff";
+	color-urgent: "#202020,       #ffffff, #202020, #202020, #ffffff";
+	color-active: "#303030,       #ffffff, #303030, #303030, #ffffff";
+
+	color-window: "#202020, #202020, #202020";
+
+	display-run: "Run";
+	display-drun: "Launch";
+	kb-row-down: "Down";
+	kb-row-tab: "";
+	kb-row-select: "Tab";
+}

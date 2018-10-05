@@ -17,4 +17,6 @@ configuration {
 	kb-row-down: "Down";
 	kb-row-tab: "";
 	kb-row-select: "Tab";
+
+	window-match-fields: "title,name,desktop";
 }

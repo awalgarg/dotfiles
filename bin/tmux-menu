@@ -8,7 +8,7 @@ from subprocess import Popen, PIPE, DEVNULL
 from datetime import datetime
 
 app_conf = {
-        'menu': ['dmenu', '-p', 'tmux', '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
+        'menu': ['dmenu', '-i', '-p', 'tmux', '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
         'term': ['st', '-e'],
 }
 

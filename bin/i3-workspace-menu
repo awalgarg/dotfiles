@@ -14,7 +14,7 @@ app_mode_move = '--mode=move' in sys.argv
 app_title = 'i3-move' if app_mode_move else 'i3-switch'
 
 app_conf = {
-        'menu': ['dmenu', '-p', app_title, '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
+        'menu': ['dmenu', '-i', '-p', app_title, '-sb', '#333', '-nb', '#222', '-l', '4', '-fn', 'Inconsolata'],
 }
 
 def workspace_list():

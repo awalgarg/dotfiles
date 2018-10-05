@@ -63,6 +63,7 @@ bindsym $mod+Shift+a focus child
 
 # switch workspace
 bindsym $mod+s exec i3-workspace-menu
+bindsym $mod+Escape workspace back_and_forth
 
 # move focused container to workspace
 bindsym $mod+Shift+s exec i3-workspace-menu --mode=move
@@ -97,9 +98,9 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 mode "nobind" {
-	bindsym $mod+Escape mode "default"
+	bindsym $mod+Shift+Escape mode "default"
 }
-bindsym $mod+Escape mode "nobind"
+bindsym $mod+Shift+Escape mode "nobind"
 
 bindsym $mod+Shift+L exec i3lock -b -e -f --tiling --image ~/.config/i3/images/lockscreen-warrior.png
 

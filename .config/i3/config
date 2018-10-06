@@ -3,6 +3,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $i3_scripts ~/.config/i3/scripts
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -62,13 +63,13 @@ bindsym $mod+a focus parent
 bindsym $mod+Shift+a focus child
 
 # switch workspace
-bindsym $mod+s exec i3-workspace-menu
+bindsym $mod+s exec $i3_scripts/i3-workspace-menu
 bindsym $mod+Escape workspace back_and_forth
-bindsym $mod+o exec i3-focus-output --next
-bindsym $mod+Shift+o exec i3-focus-output --prev
+bindsym $mod+o exec $i3_scripts/i3-focus-output --next
+bindsym $mod+Shift+o exec $i3_scripts/i3-focus-output --prev
 
 # move focused container to workspace
-bindsym $mod+Shift+s exec i3-workspace-menu --mode=move
+bindsym $mod+Shift+s exec $i3_scripts/i3-workspace-menu --mode=move
 
 bindsym $mod+Tab workspace next_on_output
 bindsym $mod+Shift+Tab workspace prev_on_output

@@ -64,6 +64,8 @@ bindsym $mod+Shift+a focus child
 # switch workspace
 bindsym $mod+s exec i3-workspace-menu
 bindsym $mod+Escape workspace back_and_forth
+bindsym $mod+o exec i3-focus-output --next
+bindsym $mod+Shift+o exec i3-focus-output --prev
 
 # move focused container to workspace
 bindsym $mod+Shift+s exec i3-workspace-menu --mode=move

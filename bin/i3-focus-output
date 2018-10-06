@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# filename: i3-focus-output
+# author: Awal Garg <i3-focus-output@awalgarg.me>
+# license: wtfpl
+
+# i3's "focus output" command doesn't have next/previous sub-commands :|
+# And this script should probably be in python but meh
+
+TARGET_OUTPUT=""
+
+if [ "--prev" == "$1" ]; then
+    TARGET_OUTPUT="$(i3-msg -t get_workspaces \
+            | jq -r '[ .[] | select (.visible)
+                     | { output: .output, focused: .focused } ]
+                     | .[path(.[] | select(.focused == true))[0] - 1] //.[-1] | .output')"
+else
+    TARGET_OUTPUT="$(i3-msg -t get_workspaces \
+            | jq -r '[ .[] | select (.visible)
+                     | { output: .output, focused: .focused } ]
+                     | .[path(.[] | select(.focused == true))[0] + 1] //.[0] | .output')"
+fi
+
+i3-msg -t command focus output "$TARGET_OUTPUT"

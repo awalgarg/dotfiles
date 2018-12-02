@@ -16,6 +16,7 @@ set writebackup
 set mouse=a
 set wildmenu
 set wildmode=full
+set shell=/bin/sh
 
 cnoreabbrev W w
 

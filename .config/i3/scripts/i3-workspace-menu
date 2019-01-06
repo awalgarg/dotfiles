@@ -13,6 +13,8 @@ import sys
 app_mode_move = '--mode=move' in sys.argv
 app_title = 'i3-move' if app_mode_move else 'i3-switch'
 
+suggestions = ['browse', 'misc', 'work']
+
 app_conf = {
         'menu': ['dmenu', '-i', '-p', app_title, '-sb', '#333', '-nb', '#222', '-l', '20', '-fn', 'Inconsolata'],
 }
@@ -51,6 +53,12 @@ def move_to_workspace(workspace_name):
 def runner():
     workspaces = workspace_list()
     items = list(map(format_menu_item, workspaces))
+    for suggestion in suggestions:
+        for workspace in workspaces:
+            if suggestion == workspace.get('name', ''):
+                break
+        else:
+            items.append(suggestion)
     choice = get_user_choice(items)
     if not choice:
         # user hit escape or something, what a slacker
@@ -60,7 +68,7 @@ def runner():
 
     try:
         workspace_name = workspaces[items.index(choice)]['name']
-    except ValueError:
+    except (IndexError, ValueError):
         workspace_name = choice
 
     if app_mode_move:

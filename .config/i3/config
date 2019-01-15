@@ -138,6 +138,8 @@ bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
 # mute volume
 bindsym XF86AudioMute exec amixer -D pulse -q set Master toggle
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 
 # add icons to title bars of known applications
 # requires the Font-Awesome font

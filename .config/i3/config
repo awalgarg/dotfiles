@@ -1,116 +1,13 @@
-# i3 config file (v4)
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+# Config variables
+
+set $dir_i3_conf ~/.config/i3
+set $dir_i3_images ~/.config/i3/images
+set $dir_i3_scripts ~/.config/i3/scripts
 
 set $mod Mod4
-set $i3_scripts ~/.config/i3/scripts
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Droid Sans Mono 8
+# Looks
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec st
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-bindsym $mod+d exec "rofi -show run -location 2 -width 100 -lines 5 -sidebar-mode -modi run,ssh,drun"
-bindsym F2 exec "rofi -show window"
-bindsym $mod+shift+Return exec ~/bin/tmux-menu
-
-# by default i3 would make focus change go through screens, lets disable that
-force_focus_wrapping yes
-
-# change focus
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# move focused window
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $mod+h split h
-
-# split in vertical orientation
-bindsym $mod+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (tabbed, toggle split)
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-bindsym $mod+Shift+a focus child
-
-# switch workspace
-bindsym $mod+s exec $i3_scripts/i3-workspace-menu
-bindsym $mod+Escape workspace back_and_forth
-bindsym $mod+o exec $i3_scripts/i3-focus-output --next
-bindsym $mod+Shift+o exec $i3_scripts/i3-focus-output --prev
-
-# move focused container to workspace
-bindsym $mod+Shift+s exec $i3_scripts/i3-workspace-menu --mode=move
-
-bindsym $mod+Tab workspace next_on_output
-bindsym $mod+Shift+Tab workspace prev_on_output
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-	# These bindings trigger as soon as you enter the resize mode
-
-	# resize with arrow keys
-	bindsym Left resize shrink width 5 px or 5 ppt
-	bindsym Down resize grow height 5 px or 5 ppt
-	bindsym Up resize shrink height 5 px or 5 ppt
-	bindsym Right resize grow width 5 px or 5 ppt
-
-	# renaming custom workspaces happens only in resize mode!
-	bindsym $mod+t exec i3-input -F 'rename workspace to "%s"' -P 'Workspace Name: '
-
-	# back to normal: Enter or Escape
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
-
-mode "nobind" {
-	bindsym $mod+Shift+Escape mode "default"
-}
-bindsym $mod+Shift+Escape mode "nobind"
-
-bindsym $mod+Shift+L exec i3lock -b -e -f --tiling --image ~/.config/i3/images/lockscreen-warrior.png
-
-hide_edge_borders both
-focus_follows_mouse no
-
-# color scheme
 set $highlight_txt		#ffffff
 set $dim_txt			#888888
 set $subtle_bg			#2d2d2d
@@ -118,7 +15,7 @@ set $dim_bg				#888888
 set $highlight_border	#444444
 set $dim_border			#222222
 
-# class					border		background	text			indicator	child_border
+### class				border		background	text			indicator	child_border
 client.focused			$subtle_bg	$subtle_bg	$highlight_txt	$dim_txt	$highlight_border
 client.focused_inactive	$subtle_bg	$subtle_bg	$highlight_txt	$dim_txt	$dim_border
 client.unfocused		$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	$dim_border
@@ -126,41 +23,118 @@ client.urgent			$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	#ff0000
 client.placeholder		$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	$dim_border
 client.background		$subtle_bg
 
-# this moves stuff to a "hidden" workspace which acts like a bin
-bindsym $mod+Shift+minus move scratchpad
-# gets last window moved to bin to current workspace in floating mode
-bindsym $mod+minus scratchpad show
+font pango:Droid Sans Mono 8
 
-# Multimedia Keys
-# increase volume
-bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
-# decrease volume
-bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
-# mute volume
-bindsym XF86AudioMute exec amixer -D pulse -q set Master toggle
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+new_window pixel 0
+hide_edge_borders both
 
-# add icons to title bars of known applications
-# requires the Font-Awesome font
 for_window [class="(?i)firefox"] title_format " %title"
 for_window [class="(?i)google-chrome"] title_format " %title"
+
+exec_always feh --no-fehbg --bg-scale $dir_i3_images/wallpaper-warrior.png
+
+# Behavior
+
+force_focus_wrapping yes
+focus_follows_mouse no
+
 for_window [class="feh"] floating enable
 
-# status bar
 bar {
-	status_command i3status -c ~/.config/i3/i3status.conf
+	status_command i3status -c $dir_i3_conf/i3status.conf
 	colors {
 		background $subtle_bg
-		statusline #ffffff
+		statusline $highlight_txt
 	}
 	position top
 	mode hide
 	modifier none
 }
 
+# Keybindings
+
+floating_modifier $mod
+
+## Launching applications
+
+bindsym $mod+Return exec st
+bindsym $mod+d exec "rofi -show run -location 2 -width 100 -lines 5 -sidebar-mode -modi run,ssh,drun"
+bindsym F2 exec "rofi -show window"
+bindsym $mod+shift+Return exec tmux-menu
+
+## Window and workspace management
+
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+w exec i3-input -F 'rename workspace to "%s"' -P "Rename workspace to: "
+
+### Moving focus
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+bindsym $mod+Tab workspace next_on_output
+bindsym $mod+Shift+Tab workspace prev_on_output
+
+bindsym $mod+s exec $dir_i3_scripts/i3-workspace-menu
+bindsym $mod+Escape workspace back_and_forth
+bindsym $mod+o exec $dir_i3_scripts/i3-focus-output --next
+bindsym $mod+Shift+o exec $dir_i3_scripts/i3-focus-output --prev
+
+bindsym $mod+space focus mode_toggle
+bindsym $mod+minus scratchpad show
+
+### Moving windows
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+Shift+s exec $dir_i3_scripts/i3-workspace-menu --mode=move
+
+bindsym $mod+Shift+minus move scratchpad
+
+### Changing layout
+
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+e layout toggle split
+bindsym $mod+w layout tabbed
+bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+space floating toggle
+
+## Misc keybindings
+
 bindsym F1 bar hidden_state toggle
 
-new_window pixel 0
+bindsym XF86AudioMute exec amixer -D pulse -q set Master toggle
+bindsym XF86AudioLowerVolume exec amixer -D pulse -q set Master 5%- unmute
+bindsym XF86AudioRaiseVolume exec amixer -D pulse -q set Master 5%+ unmute
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5
 
-exec_always feh --bg-scale ~/.config/i3/images/wallpaper-warrior.png --no-fehbg
+bindsym $mod+Shift+l exec "i3lock -b -e -f --tiling --image $dir_i3_images/lockscreen-warrior.png"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+c reload
+
+bindsym $mod+r mode "resize"
+bindsym $mod+Shift+Escape mode "nobind"
+
+mode "resize" {
+	bindsym Left resize shrink width 5 px or 5 ppt
+	bindsym Down resize grow height 5 px or 5 ppt
+	bindsym Up resize shrink height 5 px or 5 ppt
+	bindsym Right resize grow width 5 px or 5 ppt
+
+	bindsym Escape mode "default"
+}
+
+mode "nobind" {
+	bindsym $mod+Shift+Escape mode "default"
+}

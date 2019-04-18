@@ -1,6 +1,10 @@
 filetype plugin indent on
 syntax enable
 
+if !isdirectory($HOME . "/.vim/backup") && exists("*mkdir")
+	call mkdir($HOME . "/.vim/backup", "p")
+endif
+
 set hlsearch
 set incsearch
 set autoindent

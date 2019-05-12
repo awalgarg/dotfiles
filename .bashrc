@@ -1,6 +1,6 @@
-# If not running interactively, don't do anything
 case $- in
-    *i*) ;;
+    *i*) [[ -n "$INTERACTIVE_SHELL" ]] && [[ -z "$FORCE_BASH" ]] && exec "$INTERACTIVE_SHELL" ;;
+	# If not running interactively, don't do anything
       *) return;;
 esac
 

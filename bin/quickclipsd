@@ -22,9 +22,11 @@ while true; do
     ctrlv > "$tmpfile"
 
     len="$(wc -c "$tmpfile" | cut -d ' ' -f 1 | tr -d '\n')"
-    if (( "$len" > "$QUICKCLIPS_MAX_LENGTH_FILTER" )); then
+    if (( "$len" == 0 || "$len" > "$QUICKCLIPS_MAX_LENGTH_FILTER" )); then
         continue
     fi
+
+    grep -qI . "$tmpfile" || continue
 
     if [ "\n" != "$(tail -c 1 "$tmpfile")" ]; then
         printf "\n" >> "$tmpfile"

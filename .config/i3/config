@@ -59,6 +59,7 @@ bindsym $mod+d exec "rofi -show run -location 2 -width 100 -lines 5 -sidebar-mod
 bindsym F2 exec "rofi -show window"
 bindsym $mod+shift+Return exec tmux-menu
 bindsym $mod+b exec select-browser-profile
+bindsym $mod+c exec quickclips-action
 
 ## Window and workspace management
 

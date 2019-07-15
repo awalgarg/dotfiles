@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+# file: quickclips-action
+# author: Awal Garg <quickclips-action@awalgarg.me>
+# license: wtfpl
+
+DMENU_ARGS='-i -sb #333 -nb #222 -l 20 -fn Inconsolata'
+
+QUICKCLIPS_CACHE_FILE="${QUICKCLIPS_CACHE_FILE:-"${XDG_CACHE_HOME:-$HOME/.cache}"/quickclipsd-data}"
+QUICKCLIPS_ACTIONS_CACHE_FILE="${QUICKCLIPS_ACTIONS_CACHE_FILE:-"${XDG_CACHE_HOME:-$HOME/.cache}"/quickclips-actions}"
+
+entry_selection="$(cat "$QUICKCLIPS_CACHE_FILE" | dmenu -p 'quickclips' $DMENU_ARGS)"
+
+if [ -z "$entry_selection" ]; then
+    exit 1
+fi
+
+selection_preview="$(printf "$entry_selection" | head -c 16)"
+actions_dmenu_command="dmenu -p '$selection_preview' $DMENU_ARGS"
+command_selection="$(dmenu-weighted "$QUICKCLIPS_ACTIONS_CACHE_FILE" "$actions_dmenu_command")"
+
+if [ -z "$command_selection" ]; then
+    exit 2
+fi
+
+case "$command_selection" in
+    "| "*)
+        cmdtopipeto="$(printf "$command_selection" | tail -c +2)"
+        printf "$entry_selection" | sh -c "$cmdtopipeto"
+        ;;
+    *"<>"*)
+        sh -c "$(printf "$command_selection" | sed "s|<>|$entry_selection|")"
+        ;;
+    *)
+        sh -c "$command_selection \"$entry_selection\""
+        ;;
+esac

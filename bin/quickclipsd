@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# filename: quickclipsd
+# author: Awal Garg <quickclips@awalgarg.me>
+# license: wtfpl
+
+QUICKCLIPS_CACHE_FILE="${QUICKCLIPS_CACHE_FILE:-"${XDG_CACHE_HOME:-$HOME/.cache}"/quickclipsd-data}"
+QUICKCLIPS_MAX_ENTRIES="${QUICKCLIPS_MAX_ENTRIES:-10}"
+QUICKCLIPS_MAX_LENGTH_FILTER="${QUICKCLIPS_MAX_LENGTH_FILTER:-2000}"
+
+tmpfile="$(mktemp)"
+newclipboardfile="$(mktemp)"
+
+trap "rm \"$tmpfile\" \"$newclipboardfile\"" EXIT
+
+if [ ! -f "$QUICKCLIPS_CACHE_FILE" ]; then
+    touch "$QUICKCLIPS_CACHE_FILE"
+fi
+
+while true; do
+    clipnotify # program which waits for something to be pasted to clipboard
+    ctrlv > "$tmpfile"
+
+    len="$(wc -c "$tmpfile" | cut -d ' ' -f 1 | tr -d '\n')"
+    if (( "$len" > "$QUICKCLIPS_MAX_LENGTH_FILTER" )); then
+        continue
+    fi
+
+    if [ "\n" != "$(tail -c 1 "$tmpfile")" ]; then
+        printf "\n" >> "$tmpfile"
+    fi
+
+    # filter dupe from current file, cat the new entry and filtered list together, grab top max and write to the above file
+    grep -v --line-regexp --fixed-strings "$QUICKCLIPS_CACHE_FILE" -f "$tmpfile" | cat "$tmpfile" - | head -n "$QUICKCLIPS_MAX_ENTRIES" > "$newclipboardfile"
+
+    cat "$newclipboardfile" > "$QUICKCLIPS_CACHE_FILE" # we could do an mv here but no
+
+    echo > "$tmpfile"
+    echo > "$newclipboardfile"
+done

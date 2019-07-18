@@ -1,7 +1,11 @@
 #!/bin/sh
 
-if [ -e "$1" ]; then
+if [ -n "$1" ]; then
     f="$1"
+    if [ ! -e "$f" ]; then
+        echo 'File does not exist' 1>&2
+        exit 2
+    fi
     case "$f" in
         *png)
             exec xclip -sel c -t image/png "$f"
@@ -10,8 +14,7 @@ if [ -e "$1" ]; then
             exec xclip -sel c -t image/jpg "$f"
             ;;
         *)
-            if file "$f" | grep -q text
-            then
+            if grep -qI . "$f"; then
                 exec xclip -sel c "$f"
             else
                 echo 'File not image or text' 1>&2
@@ -21,4 +24,3 @@ if [ -e "$1" ]; then
 fi
 
 exec xclip -i -sel c
-

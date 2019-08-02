@@ -15,7 +15,7 @@ if [ -z "$entry_selection" ]; then
     exit 1
 fi
 
-selection_preview="$(printf "$entry_selection" | head -c 16)"
+selection_preview="$(printf '%s' "$entry_selection" | head -c 16 | tr -d "'")"
 actions_dmenu_command="dmenu -p '$selection_preview' $DMENU_ARGS"
 command_selection="$(dmenu-weighted "$QUICKCLIPS_ACTIONS_CACHE_FILE" "$actions_dmenu_command")"
 
@@ -24,12 +24,17 @@ if [ -z "$command_selection" ]; then
 fi
 
 case "$command_selection" in
-    "| "*)
-        cmdtopipeto="$(printf "$command_selection" | tail -c +2)"
-        printf "$entry_selection" | sh -c "$cmdtopipeto"
+    '| '*)
+        cmdtopipeto="$(printf '%s' "$command_selection" | tail -c +2)"
+        printf '%s' "$entry_selection" | sh -c "$cmdtopipeto"
         ;;
-    *"<>"*)
-        sh -c "$(printf "$command_selection" | sed "s|<>|$entry_selection|")"
+    *'<>'*)
+        sh -c "$(printf '%s' "$command_selection" | sed "s|<>|$entry_selection|")"
+        ;;
+    '#rm')
+        _tmp="$(mktemp)"
+        grep -v --line-regexp --fixed-strings "$entry_selection" "$QUICKCLIPS_CACHE_FILE" > "$_tmp"
+        mv "$_tmp" "$QUICKCLIPS_CACHE_FILE"
         ;;
     *)
         sh -c "$command_selection \"$entry_selection\""

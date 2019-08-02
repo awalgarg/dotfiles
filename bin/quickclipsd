@@ -21,8 +21,8 @@ while true; do
     clipnotify # program which waits for something to be pasted to clipboard
     ctrlv > "$tmpfile"
 
-    len="$(wc -c "$tmpfile" | cut -d ' ' -f 1 | tr -d '\n')"
-    if (( "$len" == 0 || "$len" > "$QUICKCLIPS_MAX_LENGTH_FILTER" )); then
+    len="$(wc -c < "$tmpfile")"
+    if (( len == 0 || len > QUICKCLIPS_MAX_LENGTH_FILTER )); then
         continue
     fi
 

@@ -13,7 +13,7 @@ import sys
 app_mode_move = '--mode=move' in sys.argv
 app_title = 'i3-move' if app_mode_move else 'i3-switch'
 
-suggestions = ['browse', 'misc', 'work']
+suggestions = ['browse', 'misc', 'work', 'media']
 
 app_conf = {
         'menu': ['dmenu', '-i', '-p', app_title, '-sb', '#333', '-nb', '#222', '-l', '20', '-fn', 'Inconsolata'],

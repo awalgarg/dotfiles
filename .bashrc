@@ -1,6 +1,6 @@
 case $- in
     *i*) [[ -n "$INTERACTIVE_SHELL" ]] && [[ -z "$FORCE_BASH" ]] && exec "$INTERACTIVE_SHELL" ;;
-	# If not running interactively, don't do anything
+    # If not running interactively, don't do anything
       *) return;;
 esac
 
@@ -23,13 +23,13 @@ alias tree='tree -FC'
 alias uptime='uptime -p'
 
 function __bash__prompt {
-	local RED="\[\033[0;31m\]"
-	local GREEN="\[\033[0;32m\]"
-	local RESET="\[\033[0m\]"
-	if [ -n "$SSH_CONNECTION" ]; then
-		printf '%s[%s]%s ' "$RED" "$(uname -n)" "$RESET"
-	fi
-	printf '%s\w%s $ ' "$GREEN" "$RESET"
+    local RED="\[\033[0;31m\]"
+    local GREEN="\[\033[0;32m\]"
+    local RESET="\[\033[0m\]"
+    if [ -n "$SSH_CONNECTION" ]; then
+        printf '%s[%s]%s ' "$RED" "$(uname -n)" "$RESET"
+    fi
+    printf '%s\w%s $ ' "$GREEN" "$RESET"
 }
 
 export PS1="$(__bash__prompt)"

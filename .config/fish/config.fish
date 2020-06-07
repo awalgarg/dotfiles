@@ -16,25 +16,25 @@ set __fish_git_prompt_char_upstream_ahead '+'
 set __fish_git_prompt_char_upstream_behind '-'
 
 function fish_user_key_bindings
-	# bind shift-up and shift-down to attribute search
-	# these are bound to alt-up and alt-down in the defaults
-	# but we use them in tmux, so we add these alternatives here
-	bind $argv \e\[1\;2A history-token-search-backward
-	bind $argv \e\[1\;2B history-token-search-forward
+    # bind shift-up and shift-down to attribute search
+    # these are bound to alt-up and alt-down in the defaults
+    # but we use them in tmux, so we add these alternatives here
+    bind $argv \e\[1\;2A history-token-search-backward
+    bind $argv \e\[1\;2B history-token-search-forward
 end
 
 function fish_prompt
-	set last_status $status
-	if test -n "$SSH_CONNECTION"
-		set_color $fish_color_cwd_root
-		printf '[%s] ' (uname -n)
-		set_color normal
-	end
-	set_color $fish_color_cwd
-	printf '%s' (prompt_pwd)
-	set_color normal
-	printf '%s ' (__fish_git_prompt)
-	set_color normal
+    set last_status $status
+    if test -n "$SSH_CONNECTION"
+        set_color $fish_color_cwd_root
+        printf '[%s] ' (uname -n)
+        set_color normal
+    end
+    set_color $fish_color_cwd
+    printf '%s' (prompt_pwd)
+    set_color normal
+    printf '%s ' (__fish_git_prompt)
+    set_color normal
 end
 
 alias uptime='uptime -p'

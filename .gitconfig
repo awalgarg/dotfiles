@@ -1,12 +1,12 @@
 [user]
-	email = awalgarg@gmail.com
-	name = Awal Garg
+    email = awalgarg@gmail.com
+    name = Awal Garg
 [push]
-	default = simple
+    default = simple
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right
-	stats = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right --stat
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right
+    stats = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right --stat
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [difftool]
-	prompt = false
+    prompt = false

@@ -8,20 +8,20 @@ set $mod Mod4
 
 # Looks
 
-set $highlight_txt		#ffffff
-set $dim_txt			#888888
-set $subtle_bg			#2d2d2d
-set $dim_bg				#888888
-set $highlight_border	#444444
-set $dim_border			#222222
+set $highlight_txt      #ffffff
+set $dim_txt            #888888
+set $subtle_bg          #2d2d2d
+set $dim_bg             #888888
+set $highlight_border   #444444
+set $dim_border         #222222
 
-### class				border		background	text			indicator	child_border
-client.focused			$subtle_bg	$subtle_bg	$highlight_txt	$dim_txt	$highlight_border
-client.focused_inactive	$subtle_bg	$subtle_bg	$highlight_txt	$dim_txt	$dim_border
-client.unfocused		$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	$dim_border
-client.urgent			$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	#ff0000
-client.placeholder		$subtle_bg	$subtle_bg	$dim_txt		$dim_txt	$dim_border
-client.background		$subtle_bg
+### class                   border          background      text                indicator       child_border
+client.focused              $subtle_bg      $subtle_bg      $highlight_txt      $dim_txt        $highlight_border
+client.focused_inactive     $subtle_bg      $subtle_bg      $highlight_txt      $dim_txt        $dim_border
+client.unfocused            $subtle_bg      $subtle_bg      $dim_txt            $dim_txt        $dim_border
+client.urgent               $subtle_bg      $subtle_bg      $dim_txt            $dim_txt        #ff0000
+client.placeholder          $subtle_bg      $subtle_bg      $dim_txt            $dim_txt        $dim_border
+client.background           $subtle_bg
 
 font pango:Droid Sans Mono 8
 
@@ -38,14 +38,14 @@ focus_follows_mouse no
 for_window [class="feh"] floating enable
 
 bar {
-	status_command i3status -c $dir_i3_conf/i3status.conf
-	colors {
-		background $subtle_bg
-		statusline $highlight_txt
-	}
-	position top
-	mode hide
-	modifier none
+    status_command i3status -c $dir_i3_conf/i3status.conf
+    colors {
+        background $subtle_bg
+        statusline $highlight_txt
+    }
+    position top
+    mode hide
+    modifier none
 }
 
 # Keybindings
@@ -126,14 +126,14 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Shift+Escape mode "nobind"
 
 mode "resize" {
-	bindsym Left resize shrink width 5 px or 5 ppt
-	bindsym Down resize grow height 5 px or 5 ppt
-	bindsym Up resize shrink height 5 px or 5 ppt
-	bindsym Right resize grow width 5 px or 5 ppt
+    bindsym Left resize shrink width 5 px or 5 ppt
+    bindsym Down resize grow height 5 px or 5 ppt
+    bindsym Up resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow width 5 px or 5 ppt
 
-	bindsym Escape mode "default"
+    bindsym Escape mode "default"
 }
 
 mode "nobind" {
-	bindsym $mod+Shift+Escape mode "default"
+    bindsym $mod+Shift+Escape mode "default"
 }

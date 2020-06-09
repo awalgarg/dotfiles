@@ -60,6 +60,7 @@ bindsym F2 exec "rofi -show window"
 bindsym $mod+shift+Return exec tmux-menu
 bindsym $mod+b exec browser-menu
 bindsym $mod+c exec quickclips-action
+bindsym $mod+n exec notifications-history
 
 ## Window and workspace management
 

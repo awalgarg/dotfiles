@@ -23,13 +23,19 @@ if [ -z "$command_selection" ]; then
     exit 2
 fi
 
+function _run {
+    _output_store="$(mktemp)"
+    sh -c "$1" > "$_output_store" 2>&1 || rofi -no-click-to-exit -e "$(cat $_output_store)" || true
+    rm $_output_store
+}
+
 case "$command_selection" in
     '| '*)
         cmdtopipeto="$(printf '%s' "$command_selection" | tail -c +2)"
-        printf '%s' "$entry_selection" | sh -c "$cmdtopipeto"
+        printf '%s' "$entry_selection" | _run "$cmdtopipeto"
         ;;
     *'<>'*)
-        sh -c "$(printf '%s' "$command_selection" | sed "s|<>|$entry_selection|")"
+        _run "$(printf '%s' "$command_selection" | sed "s|<>|$entry_selection|")"
         ;;
     '#rm')
         _tmp="$(mktemp)"
@@ -37,6 +43,6 @@ case "$command_selection" in
         mv "$_tmp" "$QUICKCLIPS_CACHE_FILE"
         ;;
     *)
-        sh -c "$command_selection \"$entry_selection\""
+        _run "$command_selection \"$entry_selection\""
         ;;
 esac

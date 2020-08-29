@@ -1,1 +1,4 @@
-feh --scale-down
+feh \
+	--scale-down \
+	--action1 ';[copy file]ctrlc %F' \
+	--action2 ';[copy path]echo %F | ctrlc'

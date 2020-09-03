@@ -64,10 +64,6 @@ def launch_term_with_cmd(cmd):
     # fuck this shit, I am going to bed
     Popen(app_conf.get('term', ['xterm', '-e']) + cmd, stdout=DEVNULL, stderr=DEVNULL)
 
-def escape_quotes(name):
-    # escape quotes for safe terminal usage
-    return name.replace('"', '\\"')
-
 def launch_session(session_name):
     return launch_term_with_cmd(['tmux', 'att', '-t', session_name])
 
@@ -85,12 +81,12 @@ def runner():
 
     try:
         session = sessions[items.index(choice)]
-        launch_session(escape_quotes(session.get('name')))
+        launch_session(session.get('name'))
     except ValueError:
         # choice not in list
         parts = choice.split(' ', 1)
-        session_name = escape_quotes(parts[0])
-        cwd = escape_quotes(parts[1]) if len(parts) > 1 else os.getcwd()
+        session_name = parts[0]
+        cwd = parts[1] if len(parts) > 1 else os.getcwd()
         create_session_and_launch(session_name, cwd)
 
 if __name__ == '__main__':

@@ -35,10 +35,8 @@ xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 highlight TrailingWhitespace ctermbg=darkgray guibg=darkgray
 match TrailingWhitespace /\s\+$\| \+\ze\t/
 
-execute pathogen#infect()
-
 let g:seoul256_background = 235
-colorscheme seoul256
+silent! colorscheme seoul256
 
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()

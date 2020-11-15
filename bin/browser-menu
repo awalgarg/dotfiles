@@ -17,7 +17,15 @@ def browser_firefox(profile_dir_path, url=None):
 def browser_chrome(profile_dir_path, url=None):
     if not url:
         url = 'chrome://newtab'
-    return ['google-chrome-unstable', '--no-first-run', '--disable-default-apps', '--no-default-browser-check', '--password-store=basic', '--user-data-dir=%s' % profile_dir_path, url]
+    return ['google-chrome-unstable',
+            '--no-first-run',
+            '--disable-default-apps',
+            '--no-default-browser-check',
+            '--password-store=basic',
+            '--metrics-recording-only',
+            '--no-pings',
+            '--user-data-dir=%s' % profile_dir_path,
+            url]
 
 def get_app_conf(menu_hint=None):
     if not menu_hint:

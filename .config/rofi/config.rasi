@@ -17,4 +17,5 @@ configuration {
     kb-row-select: "Tab";
 
     window-match-fields: "title,name,desktop";
+    monitor: "-4";
 }

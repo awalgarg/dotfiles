@@ -39,14 +39,3 @@ end
 
 alias uptime='uptime -p'
 alias tree='tree -FC'
-
-set fish_long_running_command_threshold_ms 5000
-function notify_on_long_running_command_exit --on-event fish_postexec
-    set -l saved_status "$status"
-    if test "$DISPLAY" = ""; or test "$argv" = ""; or test "$WINDOWID" = (xdotool getactivewindow)
-        return
-    end
-    if test $CMD_DURATION -gt "$fish_long_running_command_threshold_ms"
-        notify-send "completed[$CMD_DURATION:$saved_status]: $argv" > /dev/null ^ /dev/null
-    end
-end

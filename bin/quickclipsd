@@ -4,6 +4,11 @@
 # author: Awal Garg <quickclips@awalgarg.me>
 # license: wtfpl
 
+if ! command -v clipnotify >/dev/null; then
+    echo "quickclipsd: fatal: clipnotify not available in PATH"
+    exit 1
+fi
+
 QUICKCLIPS_CACHE_FILE="${QUICKCLIPS_CACHE_FILE:-"${XDG_CACHE_HOME:-$HOME/.cache}"/quickclipsd-data}"
 QUICKCLIPS_MAX_ENTRIES="${QUICKCLIPS_MAX_ENTRIES:-25}"
 QUICKCLIPS_MAX_LENGTH_FILTER="${QUICKCLIPS_MAX_LENGTH_FILTER:-2000}"

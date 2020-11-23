@@ -1,4 +1,5 @@
 feh \
 	--scale-down \
+	--auto-rotate \
 	--action1 ';[copy file]ctrlc %F' \
 	--action2 ';[copy path]echo %F | ctrlc'

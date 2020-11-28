@@ -5,32 +5,79 @@
 # license: wtfpl
 
 from subprocess import Popen, PIPE, DEVNULL
-from datetime import datetime
 import json
 import sys
 
-#XXX: move to runner function
-app_mode_move = '--mode=move' in sys.argv
-app_title = 'i3-move' if app_mode_move else 'i3-switch'
+MODE_MOVE = 'move'
+MODE_SWAP = 'swap'
+MODE_FOCUS = 'focus'
 
-suggestions = ['browse', 'misc', 'work', 'media']
+WORKSPACE_NAME_SUGGESTIONS = ['browse', 'misc', 'work', 'media']
 
-app_conf = {
-        'menu': ['dmenu', '-i', '-p', app_title, '-sb', '#333', '-nb', '#222', '-l', '20', '-fn', 'Inconsolata'],
-}
+def main(mode):
+    workspaces = i3_get('workspaces')
+    unfocused_workspaces = [ workspace for workspace in workspaces if not workspace['focused'] ]
+    filtered_workspaces = unfocused_workspaces
 
-def workspace_list():
-    rp = Popen(['i3-msg', '-t', 'get_workspaces'], stdout=PIPE)
-    rp.wait()
+    if mode == MODE_SWAP:
+        focused_workspace = [ workspace for workspace in workspaces if workspace['focused'] ][0]
+        filtered_workspaces = [ workspace for workspace in filtered_workspaces if workspace['output'] != focused_workspace['output'] ]
 
-    if rp.returncode != 0:
-        print('Error: i3-msg returned non-zero exit code %d' % rp.returncode)
-        exit(1)
+    if mode != MODE_SWAP:
+        for suggestion in WORKSPACE_NAME_SUGGESTIONS:
+            for workspace in workspaces:
+                if suggestion == workspace.get('name', ''):
+                    break
+            else:
+                filtered_workspaces.append(suggestion)
 
-    raw_json = rp.stdout.read().decode().strip()
+    (workspace_or_suggestion, new_workspace_name) = get_user_choice(filtered_workspaces, f'i3-{mode}', lambda w: w if type(w) == str else format_i3_workspace(w))
+
+    if mode == MODE_SWAP:
+        if type(workspace_or_suggestion) != dict:
+            return
+
+        swap_target_workspace = workspace_or_suggestion
+        swap_target_output = swap_target_workspace['output']
+        workspace_visible_on_swap_target_output = [ workspace for workspace in workspaces if workspace['output'] == swap_target_output and workspace['visible'] ][0]
+
+        i3_move_to_output(swap_target_workspace['output'])
+        i3_focus_workspace(swap_target_workspace['name'])
+        i3_move_to_output(focused_workspace['output'])
+        i3_focus_workspace(workspace_visible_on_swap_target_output['name'])
+        i3_focus_workspace(swap_target_workspace['name'])
+    else:
+        target_workspace_name = (
+                new_workspace_name
+                or type(workspace_or_suggestion) == str and workspace_or_suggestion
+                or type(workspace_or_suggestion) == dict and workspace_or_suggestion['name']
+        )
+
+        if not target_workspace_name:
+            return
+
+        if mode == MODE_MOVE:
+            i3_move_to_workspace(target_workspace_name)
+        elif mode == MODE_FOCUS:
+            i3_focus_workspace(target_workspace_name)
+
+def i3_get(resource_name):
+    raw_json = Popen(['i3-msg', '-t', 'get_' + resource_name], stdout=PIPE).communicate()[0]
     return json.loads(raw_json)
 
-def format_menu_item(workspace):
+def i3_command(command):
+    assert Popen(['i3-msg'] + command).wait() == 0
+
+def i3_move_to_workspace(workspace_name):
+    i3_command(['move', 'container', 'to', 'workspace', workspace_name])
+
+def i3_focus_workspace(workspace_name):
+    i3_command(['workspace', workspace_name])
+
+def i3_move_to_output(output_name):
+    i3_command(['move', 'workspace', 'to', 'output', output_name])
+
+def format_i3_workspace(workspace):
     return '{name} | {visibility_status} on {output} {focused_status} {urgency_status}'.format(
                 name=workspace.get('name', ''),
                 visibility_status='Visible' if workspace.get('visible', False) else 'Backgrounded',
@@ -39,42 +86,22 @@ def format_menu_item(workspace):
                 urgency_status='[urgent]' if workspace.get('urgent', False) else '',
                 ).strip()
 
-def get_user_choice(items):
-    menu_pipe_data = '\n'.join(items)
-    user_choice = Popen(app_conf.get('menu', ['dmenu']), stdout=PIPE, stdin=PIPE).communicate(input=menu_pipe_data.encode())[0]
-    return user_choice.decode().strip().split('\n')[0]
-
-def switch_to_workspace(workspace_name):
-    Popen(['i3-msg', '-t', 'command', 'workspace', workspace_name])
-
-def move_to_workspace(workspace_name):
-    Popen(['i3-msg', '-t', 'command', 'move container to workspace', workspace_name])
-
-def runner():
-    workspaces = workspace_list()
-    items = list(map(format_menu_item, workspaces))
-    for suggestion in suggestions:
-        for workspace in workspaces:
-            if suggestion == workspace.get('name', ''):
-                break
-        else:
-            items.append(suggestion)
-    choice = get_user_choice(items)
-    if not choice:
-        # user hit escape or something, what a slacker
-        return
-
-    workspace_name = ''
-
+def get_user_choice(available_choices, menu_hint, format_choice=str):
+    menu_command = ['dmenu', '-i', '-p', menu_hint, '-sb', '#333', '-nb', '#222', '-l', '20', '-fn', 'Inconsolata']
+    formatted_choices = [ format_choice(choice) for choice in available_choices ]
+    menu_proc = Popen(menu_command, stdin=PIPE, stdout=PIPE, stderr=DEVNULL)
+    menu_proc_stdout = menu_proc.communicate('\n'.join(formatted_choices).encode())[0].decode()
+    user_choice_str = menu_proc_stdout.strip().split('\n')[0]
+    if not user_choice_str:
+        return (None, None)
     try:
-        workspace_name = workspaces[items.index(choice)]['name']
+        return (available_choices[formatted_choices.index(user_choice_str)], None)
     except (IndexError, ValueError):
-        workspace_name = choice
-
-    if app_mode_move:
-        move_to_workspace(workspace_name)
-    else:
-        switch_to_workspace(workspace_name)
+        return (None, user_choice_str)
 
 if __name__ == '__main__':
-    runner()
+    for mode in [ MODE_FOCUS, MODE_MOVE, MODE_SWAP ]:
+        if f'--mode={mode}' in sys.argv:
+            main(mode)
+            break
+    else: main(MODE_FOCUS)

@@ -65,7 +65,7 @@ bindsym $mod+n exec notifications-history
 ## Window and workspace management
 
 bindsym $mod+Shift+q kill
-bindsym $mod+Shift+w exec i3-input -F 'rename workspace to "%s"' -P "Rename workspace to: "
+bindsym $mod+Shift+w exec $dir_i3_scripts/i3-workspace-menu --mode=rename
 
 ### Moving focus
 

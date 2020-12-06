@@ -11,11 +11,21 @@ import sys
 MODE_MOVE = 'move'
 MODE_SWAP = 'swap'
 MODE_FOCUS = 'focus'
+MODE_RENAME = 'rename'
 
-WORKSPACE_NAME_SUGGESTIONS = ['browse', 'misc', 'work', 'media']
+WORKSPACE_NAME_SUGGESTIONS = set(['browse', 'misc', 'work', 'media'])
 
 def main(mode):
     workspaces = i3_get('workspaces')
+
+    filtered_suggestions = list(WORKSPACE_NAME_SUGGESTIONS - set(map(lambda w: w['name'], workspaces)))
+
+    if mode == MODE_RENAME:
+        suggestion, new_workspace_name = get_user_choice(filtered_suggestions, 'i3-rename')
+        if suggestion or new_workspace_name:
+            i3_rename_workspace(suggestion or new_workspace_name)
+        return
+
     unfocused_workspaces = [ workspace for workspace in workspaces if not workspace['focused'] ]
     filtered_workspaces = unfocused_workspaces
 
@@ -24,12 +34,7 @@ def main(mode):
         filtered_workspaces = [ workspace for workspace in filtered_workspaces if workspace['output'] != focused_workspace['output'] ]
 
     if mode != MODE_SWAP:
-        for suggestion in WORKSPACE_NAME_SUGGESTIONS:
-            for workspace in workspaces:
-                if suggestion == workspace.get('name', ''):
-                    break
-            else:
-                filtered_workspaces.append(suggestion)
+        filtered_workspaces += filtered_suggestions
 
     (workspace_or_suggestion, new_workspace_name) = get_user_choice(filtered_workspaces, f'i3-{mode}', lambda w: w if type(w) == str else format_i3_workspace(w))
 
@@ -74,6 +79,9 @@ def i3_move_to_workspace(workspace_name):
 def i3_focus_workspace(workspace_name):
     i3_command(['workspace', workspace_name])
 
+def i3_rename_workspace(new_workspace_name):
+    i3_command(['rename', 'workspace', 'to', new_workspace_name])
+
 def i3_move_to_output(output_name):
     i3_command(['move', 'workspace', 'to', 'output', output_name])
 
@@ -100,7 +108,7 @@ def get_user_choice(available_choices, menu_hint, format_choice=str):
         return (None, user_choice_str)
 
 if __name__ == '__main__':
-    for mode in [ MODE_FOCUS, MODE_MOVE, MODE_SWAP ]:
+    for mode in [ MODE_FOCUS, MODE_MOVE, MODE_SWAP, MODE_RENAME ]:
         if f'--mode={mode}' in sys.argv:
             main(mode)
             break

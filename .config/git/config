@@ -2,10 +2,14 @@
     email = awalgarg@gmail.com
     name = Awal Garg
 [push]
-    default = simple
+    default = nothing
+[pull]
+    rebase = true
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right
 [diff]
     tool = vimdiff
 [difftool]
     prompt = false
+[rerere]
+    enabled = true

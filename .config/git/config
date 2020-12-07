@@ -5,7 +5,6 @@
     default = simple
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right
-    stats = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)(%an)%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --left-right --stat
 [diff]
     tool = vimdiff
 [difftool]

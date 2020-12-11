@@ -26,23 +26,15 @@ def main(mode):
             i3_rename_workspace(suggestion or new_workspace_name)
         return
 
-    unfocused_workspaces = [ workspace for workspace in workspaces if not workspace['focused'] ]
-    filtered_workspaces = unfocused_workspaces
+    filtered_workspaces = [ workspace for workspace in workspaces if not workspace['focused'] ]
 
     if mode == MODE_SWAP:
         focused_workspace = [ workspace for workspace in workspaces if workspace['focused'] ][0]
         filtered_workspaces = [ workspace for workspace in filtered_workspaces if workspace['output'] != focused_workspace['output'] ]
-
-    if mode != MODE_SWAP:
-        filtered_workspaces += filtered_suggestions
-
-    (workspace_or_suggestion, new_workspace_name) = get_user_choice(filtered_workspaces, f'i3-{mode}', lambda w: w if type(w) == str else format_i3_workspace(w))
-
-    if mode == MODE_SWAP:
-        if type(workspace_or_suggestion) != dict:
+        swap_target_workspace, _ = get_user_choice(filtered_workspaces, f'i3-{mode}', format_i3_workspace)
+        if not swap_target_workspace:
             return
 
-        swap_target_workspace = workspace_or_suggestion
         swap_target_output = swap_target_workspace['output']
         workspace_visible_on_swap_target_output = [ workspace for workspace in workspaces if workspace['output'] == swap_target_output and workspace['visible'] ][0]
 
@@ -51,20 +43,24 @@ def main(mode):
         i3_move_to_output(focused_workspace['output'])
         i3_focus_workspace(workspace_visible_on_swap_target_output['name'])
         i3_focus_workspace(swap_target_workspace['name'])
-    else:
-        target_workspace_name = (
-                new_workspace_name
-                or type(workspace_or_suggestion) == str and workspace_or_suggestion
-                or type(workspace_or_suggestion) == dict and workspace_or_suggestion['name']
-        )
+        return
 
-        if not target_workspace_name:
-            return
+    filtered_workspaces += filtered_suggestions
+    workspace_or_suggestion, new_workspace_name = get_user_choice(filtered_workspaces, f'i3-{mode}', lambda w: w if type(w) == str else format_i3_workspace(w))
 
-        if mode == MODE_MOVE:
-            i3_move_to_workspace(target_workspace_name)
-        elif mode == MODE_FOCUS:
-            i3_focus_workspace(target_workspace_name)
+    target_workspace_name = (
+            new_workspace_name
+            or type(workspace_or_suggestion) == str and workspace_or_suggestion
+            or type(workspace_or_suggestion) == dict and workspace_or_suggestion['name']
+    )
+
+    if not target_workspace_name:
+        return
+
+    if mode == MODE_MOVE:
+        i3_move_to_workspace(target_workspace_name)
+    elif mode == MODE_FOCUS:
+        i3_focus_workspace(target_workspace_name)
 
 def i3_get(resource_name):
     raw_json = Popen(['i3-msg', '-t', 'get_' + resource_name], stdout=PIPE).communicate()[0]

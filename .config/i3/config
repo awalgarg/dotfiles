@@ -55,8 +55,8 @@ floating_modifier $mod
 ## Launching applications
 
 bindsym $mod+Return exec st
-bindsym $mod+d exec "rofi -show run -location 2 -width 100 -lines 5 -sidebar-mode -modi run,ssh,drun"
-bindsym F2 exec "rofi -show window"
+bindsym $mod+d exec "rofi -show run -modi run,window,calc -sidebar-mode"
+bindsym F2 exec "rofi -show window -modi run,window,calc -sidebar-mode"
 bindsym $mod+shift+Return exec tmux-menu
 bindsym $mod+b exec browser-menu
 bindsym $mod+c exec quickclips-action

@@ -18,4 +18,5 @@ configuration {
 
     window-match-fields: "title,name,desktop";
     monitor: "-4";
+    matching-negate-char: '\0';
 }

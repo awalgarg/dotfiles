@@ -12,11 +12,21 @@ MODE_MOVE = 'move'
 MODE_SWAP = 'swap'
 MODE_FOCUS = 'focus'
 MODE_RENAME = 'rename'
+MODE_MOVE_WORKSPACE = 'move-workspace'
 
 WORKSPACE_NAME_SUGGESTIONS = set(['browse', 'misc', 'work', 'media'])
 
 def main(mode):
     workspaces = i3_get('workspaces')
+
+    if mode == MODE_MOVE_WORKSPACE:
+        current_workspace_output = [ workspace['output'] for workspace in workspaces if workspace['focused'] ][0]
+        outputs = [ output['name'] for output in i3_get('outputs') if output['active'] and output['name'] != current_workspace_output ]
+        output, _ = get_user_choice(outputs, f'i3-{mode}')
+        if not output:
+            return
+        i3_move_to_output(output)
+        return
 
     filtered_suggestions = list(WORKSPACE_NAME_SUGGESTIONS - set(map(lambda w: w['name'], workspaces)))
 
@@ -104,7 +114,7 @@ def get_user_choice(available_choices, menu_hint, format_choice=str):
         return (None, user_choice_str)
 
 if __name__ == '__main__':
-    for mode in [ MODE_FOCUS, MODE_MOVE, MODE_SWAP, MODE_RENAME ]:
+    for mode in [ MODE_FOCUS, MODE_MOVE, MODE_SWAP, MODE_RENAME, MODE_MOVE_WORKSPACE ]:
         if f'--mode={mode}' in sys.argv:
             main(mode)
             break

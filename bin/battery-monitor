@@ -1,8 +1,0 @@
-#!/bin/sh
-
-BATTERY_STATS_FILE="${BATTERY_STATS_FILE:-"${XDG_CACHE_HOME:-$HOME/.cache}"/battery-stats}"
-
-while true; do
-    echo "$(date)" '|' "$(acpi)" >> "$BATTERY_STATS_FILE"
-    sleep "$(( 5 * 60 ))"
-done
